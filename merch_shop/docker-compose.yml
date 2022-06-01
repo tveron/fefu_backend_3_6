@@ -25,6 +25,7 @@ services:
         depends_on:
             - pgsql
     pgsql:
+        container_name: 'pgsql_container'
         image: 'postgres:14'
         ports:
             - '${FORWARD_DB_PORT:-5432}:5432'
@@ -35,14 +36,13 @@ services:
             POSTGRES_PASSWORD: '${DB_PASSWORD:-secret}'
         volumes:
             - 'sail-pgsql:/var/lib/postgresql/data'
-            - './vendor/laravel/sail/database/pgsql/create-testing-database.sql:/docker-entrypoint-initdb.d/10-create-testing-database.sql'
         networks:
             - sail
         healthcheck:
             test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
             retries: 3
             timeout: 5s
-     pgadmin4:
+    pgadmin4:
         container_name: 'pgadmin_container'
         image: 'dpage/pgadmin4:latest'
         ports:
