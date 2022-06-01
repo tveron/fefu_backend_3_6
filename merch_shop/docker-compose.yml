@@ -42,8 +42,7 @@ services:
             test: ["CMD", "pg_isready", "-q", "-d", "${DB_DATABASE}", "-U", "${DB_USERNAME}"]
             retries: 3
             timeout: 5s
-
-    pgadmin4:
+     pgadmin4:
         container_name: 'pgadmin_container'
         image: 'dpage/pgadmin4:latest'
         ports:
