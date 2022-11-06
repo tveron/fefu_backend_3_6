@@ -31,6 +31,10 @@ return [
                     'name' => 'pages',
                     'description' => 'Pages',
                 ],
+                [
+                    'name' => 'appeals',
+                    'description' => 'Appeals',
+                ],
 
             ],
 

@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\Web\AppealController;
 use App\Http\Controllers\Web\NewsWebController;
 use App\Http\Controllers\Web\PageWebController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Web\AppealWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,8 +20,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/appeal', [AppealController::class, ]);
-Route::post('/appeal');
+Route::get('/appeal', [AppealWebController::class, 'form'])->name('appeal.form');
+Route::post('/appeal', [AppealWebController::class, 'send'])->name('appeal.send');
 
 Route::get('/page', [PageWebController::class, 'index']);
 Route::get('/page/{slug}', [PageWebController::class, 'show']);
