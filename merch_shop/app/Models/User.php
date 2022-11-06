@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Hash;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,6 +38,28 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $github_id
+ * @property string|null $github_logged_in_at
+ * @property string|null $github_registered_at
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubLoggedInAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGithubRegisteredAt($value)
+ * @property string|null $vk_id
+ * @property \Illuminate\Support\Carbon|null $vk_logged_in_at
+ * @property \Illuminate\Support\Carbon|null $vk_registered_at
+ * @property string|null $google_id
+ * @property \Illuminate\Support\Carbon|null $google_logged_in_at
+ * @property \Illuminate\Support\Carbon|null $google_registered_at
+ * @property \Illuminate\Support\Carbon|null $app_logged_in_at
+ * @property \Illuminate\Support\Carbon|null $app_registered_at
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAppLoggedInAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAppRegisteredAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleLoggedInAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereGoogleRegisteredAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVkId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVkLoggedInAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereVkRegisteredAt($value)
  */
 class User extends Authenticatable
 {
@@ -51,6 +74,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'github_id',
+        'github_logged_in_at',
+        'github_registered_at',
+        'google_id',
+        'google_logged_in_at',
+        'google_registered_at',
     ];
 
     /**
@@ -61,6 +90,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'github_id',
+        'google_id',
     ];
 
     /**
@@ -70,14 +101,34 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'github_logged_in_at' => 'datetime',
+        'github_registered_at' => 'datetime',
+        'google_logged_in_at' => 'datetime',
+        'google_registered_at' => 'datetime',
+        'app_logged_in_at' => 'datetime',
+        'app_registered_at' => 'datetime',
     ];
 
 
-    public static function createFormRequest(array $requestData) : self {
+    public static function createFromRequest(array $requestData) : self {
+
         $user = new self();
         $user->name = $requestData['name'];
         $user->email = $requestData['email'];
         $user->password = Hash::make($requestData['password']);
+        $user->app_logged_in_at = Carbon::now();
+        $user->app_registered_at = Carbon::now();
+        $user->save();
+
+        return $user;
+    }
+
+
+    public static function changeFromRequest(User $user, array $data) {
+
+        $user->password = Hash::make($data['password']);
+        $user->app_logged_in_at = Carbon::now();
+        $user->app_registered_at = Carbon::now();
         $user->save();
 
         return $user;

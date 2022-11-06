@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\OAuthController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\ProfileController;
 use App\Http\Controllers\Web\NewsWebController;
@@ -54,6 +55,7 @@ Route::get('/register', [AuthWebController::class, 'registerForm'])
 Route::post('/register', [AuthWebController::class, 'register'])
     ->name('register.post');
 
-
-
-
+Route::prefix('/oauth')->group(function () {
+    Route::get('/{provider}/redirect', [OAuthController::class, 'redirectToService'])->name('oauth.redirect');
+    Route::get('/{provider}/login', [OAuthController::class, 'login'])->name('oauth.login');
+});

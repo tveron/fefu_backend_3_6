@@ -34,7 +34,6 @@ class AuthWebController extends Controller
         return back()->with([
             'email' => 'invalid'
         ]);
-
     }
 
     public function logout(Request $request)
@@ -45,14 +44,13 @@ class AuthWebController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-
     }
 
     public function register(BaseRegisterFormRequest $request)
     {
         $data = $request->validated();
 
-        $user = User::createFormRequest($data);
+        $user = User::createFromRequest($data);
 
         Auth::login($user);
         $request->session()->regenerate();

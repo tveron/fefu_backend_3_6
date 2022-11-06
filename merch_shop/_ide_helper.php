@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.5.1.
+ * Generated for Laravel 9.6.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -1896,6 +1896,7 @@ namespace Illuminate\Support\Facades {
          * @param string $field
          * @param array $extraConditions
          * @return \Symfony\Component\HttpFoundation\Response|null
+         * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
          * @static
          */
         public static function basic($field = 'email', $extraConditions = [])
@@ -1909,6 +1910,7 @@ namespace Illuminate\Support\Facades {
          * @param string $field
          * @param array $extraConditions
          * @return \Symfony\Component\HttpFoundation\Response|null
+         * @throws \Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException
          * @static
          */
         public static function onceBasic($field = 'email', $extraConditions = [])
@@ -6410,6 +6412,19 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Filesystem\Filesystem $instance */
             return $instance->isWritable($path);
+        }
+        /**
+         * Determine if two files are the same by comparing their hashes.
+         *
+         * @param string $firstFile
+         * @param string $secondFile
+         * @return bool
+         * @static
+         */
+        public static function hasSameHash($firstFile, $secondFile)
+        {
+            /** @var \Illuminate\Filesystem\Filesystem $instance */
+            return $instance->hasSameHash($firstFile, $secondFile);
         }
         /**
          * Determine if the given path is a file.
@@ -11952,6 +11967,7 @@ namespace Illuminate\Support\Facades {
      * @method static \Illuminate\Routing\RouteRegistrar prefix(string $prefix)
      * @method static \Illuminate\Routing\RouteRegistrar scopeBindings()
      * @method static \Illuminate\Routing\RouteRegistrar where(array $where)
+     * @method static \Illuminate\Routing\RouteRegistrar withoutMiddleware(array|string $middleware)
      * @see \Illuminate\Routing\Router
      */
     class Route {
@@ -12607,7 +12623,7 @@ namespace Illuminate\Support\Facades {
         /**
          * Check if a route with the given name exists.
          *
-         * @param string $name
+         * @param string|array $name
          * @return bool
          * @static
          */
@@ -13020,6 +13036,34 @@ namespace Illuminate\Support\Facades {
         {            //Method inherited from \Illuminate\Database\Schema\Builder
             /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
             return $instance->hasColumns($table, $columns);
+        }
+        /**
+         * Execute a table builder callback if the given table has a given column.
+         *
+         * @param string $table
+         * @param string $column
+         * @param \Closure $callback
+         * @return void
+         * @static
+         */
+        public static function whenTableHasColumn($table, $column, $callback)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder
+            /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+            $instance->whenTableHasColumn($table, $column, $callback);
+        }
+        /**
+         * Execute a table builder callback if the given table doesn't have a given column.
+         *
+         * @param string $table
+         * @param string $column
+         * @param \Closure $callback
+         * @return void
+         * @static
+         */
+        public static function whenTableDoesntHaveColumn($table, $column, $callback)
+        {            //Method inherited from \Illuminate\Database\Schema\Builder
+            /** @var \Illuminate\Database\Schema\PostgresBuilder $instance */
+            $instance->whenTableDoesntHaveColumn($table, $column, $callback);
         }
         /**
          * Get the data type for the given column name.
@@ -14179,7 +14223,7 @@ namespace Illuminate\Support\Facades {
          * @param string $path
          * @param \Psr\Http\Message\StreamInterface|\Illuminate\Http\File|\Illuminate\Http\UploadedFile|string|resource $contents
          * @param mixed $options
-         * @return bool
+         * @return string|bool
          * @static
          */
         public static function put($path, $contents, $options = [])
@@ -14619,6 +14663,18 @@ namespace Illuminate\Support\Facades {
         {
             /** @var \Illuminate\Routing\UrlGenerator $instance */
             return $instance->previous($fallback);
+        }
+        /**
+         * Get the previous path info for the request.
+         *
+         * @param mixed $fallback
+         * @return string
+         * @static
+         */
+        public static function previousPath($fallback = false)
+        {
+            /** @var \Illuminate\Routing\UrlGenerator $instance */
+            return $instance->previousPath($fallback);
         }
         /**
          * Generate an absolute URL to the given path.
@@ -16183,6 +16239,138 @@ namespace Illuminate\Support {
      *
      */
     class Str {
+
+    }
+
+}
+
+namespace Laravel\Socialite\Facades {
+    /**
+     *
+     *
+     * @see \Laravel\Socialite\SocialiteManager
+     */
+    class Socialite {
+        /**
+         * Get a driver instance.
+         *
+         * @param string $driver
+         * @return mixed
+         * @static
+         */
+        public static function with($driver)
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->with($driver);
+        }
+        /**
+         * Build an OAuth 2 provider instance.
+         *
+         * @param string $provider
+         * @param array $config
+         * @return \Laravel\Socialite\Two\AbstractProvider
+         * @static
+         */
+        public static function buildProvider($provider, $config)
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->buildProvider($provider, $config);
+        }
+        /**
+         * Format the server configuration.
+         *
+         * @param array $config
+         * @return array
+         * @static
+         */
+        public static function formatConfig($config)
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->formatConfig($config);
+        }
+        /**
+         * Forget all of the resolved driver instances.
+         *
+         * @return \Laravel\Socialite\SocialiteManager
+         * @static
+         */
+        public static function forgetDrivers()
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->forgetDrivers();
+        }
+        /**
+         * Set the container instance used by the manager.
+         *
+         * @param \Illuminate\Contracts\Container\Container $container
+         * @return \Laravel\Socialite\SocialiteManager
+         * @static
+         */
+        public static function setContainer($container)
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->setContainer($container);
+        }
+        /**
+         * Get the default driver name.
+         *
+         * @return string
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function getDefaultDriver()
+        {
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->getDefaultDriver();
+        }
+        /**
+         * Get a driver instance.
+         *
+         * @param string|null $driver
+         * @return mixed
+         * @throws \InvalidArgumentException
+         * @static
+         */
+        public static function driver($driver = null)
+        {            //Method inherited from \Illuminate\Support\Manager
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->driver($driver);
+        }
+        /**
+         * Register a custom driver creator Closure.
+         *
+         * @param string $driver
+         * @param \Closure $callback
+         * @return \Laravel\Socialite\SocialiteManager
+         * @static
+         */
+        public static function extend($driver, $callback)
+        {            //Method inherited from \Illuminate\Support\Manager
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->extend($driver, $callback);
+        }
+        /**
+         * Get all of the created "drivers".
+         *
+         * @return array
+         * @static
+         */
+        public static function getDrivers()
+        {            //Method inherited from \Illuminate\Support\Manager
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->getDrivers();
+        }
+        /**
+         * Get the container instance used by the manager.
+         *
+         * @return \Illuminate\Contracts\Container\Container
+         * @static
+         */
+        public static function getContainer()
+        {            //Method inherited from \Illuminate\Support\Manager
+            /** @var \Laravel\Socialite\SocialiteManager $instance */
+            return $instance->getContainer();
+        }
 
     }
 
@@ -20245,6 +20433,7 @@ namespace  {
     class URL extends \Illuminate\Support\Facades\URL {}
     class Validator extends \Illuminate\Support\Facades\Validator {}
     class View extends \Illuminate\Support\Facades\View {}
+    class Socialite extends \Laravel\Socialite\Facades\Socialite {}
     class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
 
 }
