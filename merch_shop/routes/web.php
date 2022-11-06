@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\NewsWebController;
 use App\Http\Controllers\Web\PageWebController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\AppealWebController;
+use App\Http\Controllers\Web\CategoriesWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ use App\Http\Controllers\Web\AppealWebController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/categories/{slug?}', [CategoriesWebController::class, 'index'])
+    ->name('categories');
 
 Route::get('/appeal', [AppealWebController::class, 'form'])
     ->name('appeal.form');
