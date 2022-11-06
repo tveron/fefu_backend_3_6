@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthApiController;
 use App\Http\Controllers\Api\CategoriesApiController;
 use App\Http\Controllers\Api\NewsApiController;
 use App\Http\Controllers\Api\PageApiController;
+use App\Http\Controllers\Api\ProductApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,12 @@ Route::apiResource('pages', PageApiController::class)->only([
     'show',
 ]);
 
-Route::apiResource('Categories', CategoriesApiController::class)->only([
+Route::apiResource('categories', CategoriesApiController::class)->only([
     'index',
     'show',
 ]);
+
+Route::prefix('catalog')->group(function () {
+    Route::get('product/list', [ProductApiController::class, 'index']);
+    Route::get('product/details', [ProductApiController::class, 'show']);
+});

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\ProductWebController;
 use App\Http\Controllers\Web\OAuthController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\ProfileController;
@@ -26,6 +27,11 @@ Route::get('/', function () {
 
 Route::get('/categories/{slug?}', [CategoriesWebController::class, 'index'])
     ->name('categories');
+
+Route::get('/catalog/product/{slug}', [ProductWebController::class, 'index'])
+    ->name('product');
+
+
 
 Route::get('/appeal', [AppealWebController::class, 'form'])
     ->name('appeal.form');

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CategoriesResources;
+use App\Http\Resources\Catalog\CategoryResource;
 use App\Models\ProductCategory;
-use App\OpenApi\Responses\catalog\AllCategoriesResponse;
-use App\OpenApi\Responses\catalog\ShowCategoriesResponse;
+use App\OpenApi\Responses\Catalog\Categories\AllCategoriesResponse;
+use App\OpenApi\Responses\Catalog\Categories\ShowCategoriesResponse;
+use App\OpenApi\Responses\Catalog\Categories\ShowCategoryResponse;
 use App\OpenApi\Responses\NotFoundResponse;
 use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
@@ -18,15 +19,14 @@ class CategoriesApiController extends Controller
      *
      * @return Responsable
      */
-    #[OpenApi\Operation(tags: ['categories'])]
+    #[OpenApi\Operation(tags: ['categories'], method: 'GET')]
     #[OpenApi\Response(factory: AllCategoriesResponse::class, statusCode: 200)]
-    public function index( )
+    public function index()
     {
-        return CategoriesResources::collection(
+        return CategoryResource::collection(
             ProductCategory::all()
         );
     }
-
 
     /**
      * Display Categories through slug.
@@ -34,12 +34,12 @@ class CategoriesApiController extends Controller
      * @param string $slug
      * @return Responsable
      */
-    #[OpenApi\Operation(tags: ['categories'])]
-    #[OpenApi\Response(factory: ShowCategoriesResponse::class, statusCode: 200)]
+    #[OpenApi\Operation(tags: ['categories'],  method: 'GET')]
+    #[OpenApi\Response(factory: ShowCategoryResponse::class, statusCode: 200)]
     #[OpenApi\Response(factory: NotFoundResponse::class, statusCode: 404)]
     public function show(string $slug)
     {
-        return new CategoriesResources(
+        return new CategoryResource(
             ProductCategory::query()->where('slug', $slug)->firstOrFail()
         );
     }

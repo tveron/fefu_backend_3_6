@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Catalog;
 use App\Models\News;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @mixin Categories
+ * @mixin ProductAttributeValues
  */
-class CategoriesResources extends JsonResource
+class AttributeValueResource extends JsonResource
 {
 
     /**
@@ -19,10 +19,8 @@ class CategoriesResources extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'name' => $this->name,
-            'slug' => $this->slug,
-            'parent_id' => $this->parent_id,
+            'value' => $this->value,
         ];
     }
 }
