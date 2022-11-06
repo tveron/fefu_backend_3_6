@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\PageWebController;
+use App\Http\Controllers\Web\AppealController;
+use App\Http\Controllers\Web\NewsWebController;
+use App\Http\Controllers\Web\PageWebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/appeal', [AppealController::class, ]);
+Route::post('/appeal');
+
+Route::get('/page', [PageWebController::class, 'index']);
+Route::get('/page/{slug}', [PageWebController::class, 'show']);
+
+Route::get('/news', [NewsWebController::class, 'index']);
+Route::get('/news/{slug}', [NewsWebController::class, 'show']);
 
 
-Route::get('/{slug}', PageWebController::class);
