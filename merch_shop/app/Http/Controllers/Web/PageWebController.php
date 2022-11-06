@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers\Web;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\Responsable;
 use App\Models\Page;
-use function App\Http\Controllers\abort;
-use function App\Http\Controllers\view;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PageWebController extends Controller
 {
