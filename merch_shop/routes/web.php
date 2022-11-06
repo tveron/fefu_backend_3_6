@@ -9,6 +9,7 @@ use App\Http\Controllers\Web\PageWebController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Web\AppealWebController;
 use App\Http\Controllers\Web\CategoriesWebController;
+use App\Http\Controllers\Web\CartWebController;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,3 +70,6 @@ Route::prefix('/oauth')->group(function () {
     Route::get('/{provider}/redirect', [OAuthController::class, 'redirectToService'])->name('oauth.redirect');
     Route::get('/{provider}/login', [OAuthController::class, 'login'])->name('oauth.login');
 });
+
+
+Route::get('/cart', CartWebController::class)->middleware('auth.optional');
